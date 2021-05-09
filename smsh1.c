@@ -101,11 +101,11 @@ void fatal(char *s1, char *s2, int n)
 /*
  * changeDir changes current directory
  *
- *    Parameters:
- *      char arry of absolute file path, or relative file path.
- *      note: after arguments parsed by split line, absolute path will lack
- *        leading backslash.
- *    Returns: 0 on succes, -1 on error.
+ *  Parameters:
+ *    char arry of absolute file path, or relative file path.
+ *    note: after arguments parsed by split line, absolute path will lack
+ *      leading backslash.
+ *  Returns: 0 on succes, -1 on error.
 */
 int changeDir(char *nextDir){
   int success = 0;
@@ -125,6 +125,12 @@ int changeDir(char *nextDir){
   return success;
 }
 
+/*
+ *  updatePrompt will update the shell prompt to reflect user and current
+ *  working directory
+ *
+ *  Returns: character array of updated prompt.
+*/
 char *updatePrompt(){
   char cwd[256], *usr;
   getcwd(cwd, sizeof(cwd));
