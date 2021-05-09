@@ -13,6 +13,7 @@
 #include "smsh.h"
 #include <string.h>
 #include <sys/wait.h>
+#include <pwd.h>
 
 int changeDir(char *nextDir);
 char *updatePrompt();
@@ -25,9 +26,15 @@ int main()
   char *cdString = "cd";
   char *exitString = "exit";
   int val;
+  char *user_home; //home directory for user
 
   prompt = updatePrompt();
   setup();
+
+  //get home directory of user
+  struct passwd *pw = getpwuid( getuid() );
+  user_home = pw->pw_dir;
+  printf("\nuser_home is: %s\n",user_home);
 
   while ( (cmdline = next_cmd(prompt, stdin)) != NULL ){
 
@@ -58,8 +65,12 @@ int main()
       }
 
       //check if user desires to change directory
-      if (strstr(cmdline, "cd")){
-        changeDir(arglist[1]);
+      if ( (strcmp(arglist[0], "cd")) == 0){
+        if (arglist[1] == NULL) //if no args, return to default
+          changeDir(user_home);
+        else
+          changeDir(arglist[1]);
+
         prompt = updatePrompt();
       } else {
       result = execute(arglist);
@@ -87,20 +98,31 @@ void fatal(char *s1, char *s2, int n)
   exit(n);
 }
 
+/*
+ * changeDir changes current directory
+ *
+ *    Parameters:
+ *      char arry of absolute file path, or relative file path.
+ *      note: after arguments parsed by split line, absolute path will lack
+ *        leading backslash.
+ *    Returns: 0 on succes, -1 on error.
+*/
 int changeDir(char *nextDir){
-  char cwd[256];
-  char *pastDir = "..";
-  if (getcwd(cwd, sizeof(cwd)) == NULL)
-    perror("getcwd() error");
-  else if (strcmp(nextDir, pastDir) == 0){
-    if (chdir("..") == -1)   //gary - what about relative like ./projects/prj5/ etc;
-      perror("chdir() error");
-  } else {
-  strcat(cwd, "/");   //gary- what about entries like /usr/class/csci296/ etc.; one that is full path
-  strcat(cwd, nextDir);
-  if (chdir(cwd) == -1)
-    perror("chdir() error");
+  int success = 0;
+  char absolute_path[BUFSIZ] = "/";
+  printf("\nInside changeDir:\n");
+  printf("nextDir is: %s\n",nextDir);
+  if(nextDir != NULL && strlen(nextDir)>0 && nextDir[0] != '.'){
+    // if here, not a relative path. need to add backslash that
+    //  gets removed from split line.c
+    strcat(absolute_path,nextDir);
+    printf("absDir: %s\n",absolute_path);
   }
+  if(chdir(nextDir) ==-1){
+    perror("chdir error");
+    success = -1;
+  }
+  return success;
 }
 
 char *updatePrompt(){
