@@ -17,6 +17,7 @@
 
 int changeDir(char *nextDir);
 char *updatePrompt();
+void rick_grimes();
 
 int main()
 {
@@ -34,7 +35,6 @@ int main()
   //get home directory of user
   struct passwd *pw = getpwuid( getuid() );
   user_home = pw->pw_dir;
-  printf("\nuser_home is: %s\n",user_home);
 
   while ( (cmdline = next_cmd(prompt, stdin)) != NULL ){
 
@@ -61,6 +61,7 @@ int main()
         printf("Goodbye..\n");
         freelist(arglist);
         free(cmdline);
+        rick_grimes();
         exit(val);
       }
 
@@ -110,8 +111,6 @@ void fatal(char *s1, char *s2, int n)
 int changeDir(char *nextDir){
   int success = 0;
   char absolute_path[BUFSIZ] = "/";
-  printf("\nInside changeDir:\n");
-  printf("nextDir is: %s\n",nextDir);
   if(nextDir != NULL && strlen(nextDir)>0 && nextDir[0] != '.'){
     // if here, not a relative path. need to add backslash that
     //  gets removed from split line.c
@@ -141,4 +140,12 @@ char *updatePrompt(){
   strcat(usr, " $ ");
   strcat(usr, "\033[0m");
   return usr;
+}
+
+
+/*
+ * Leave no zombies behind
+*/
+void rick_grimes(){
+  kill(0,SIGQUIT); //kill them all
 }

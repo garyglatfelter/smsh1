@@ -7,6 +7,8 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <stdbool.h>
+#include <fcntl.h>
+
 
 int execute(char *argv[])
 /*
@@ -40,6 +42,15 @@ int execute(char *argv[])
   else if ( pid == 0 ){ //this is forked child process
     signal(SIGINT, SIG_DFL);
     signal(SIGQUIT, SIG_DFL);
+
+    if(run_in_background){  //if so, redirect stdin,stdout, and stderr
+      int new_in,new_out;
+      new_in = open("/dev/null", O_RDONLY);
+      new_out = open("/dev/null",O_WRONLY);
+      dup2(new_in,0);
+      dup2(new_out,1);
+      dup2(new_out,2);
+    }
     execvp(argv[0], argv);
     perror("cannot execute command");
     exit(1);
