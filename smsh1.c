@@ -109,19 +109,10 @@ void fatal(char *s1, char *s2, int n)
  *
  *  Parameters:
  *    char arry of absolute file path, or relative file path.
- *    note: after arguments parsed by split line, absolute path will lack
- *      leading backslash.
  *  Returns: 0 on succes, -1 on error.
 */
 int changeDir(char *nextDir){
   int success = 0;
-  char absolute_path[BUFSIZ] = "/";
-  if(nextDir != NULL && strlen(nextDir)>0 && nextDir[0] != '.'){
-    // if here, not a relative path. need to add backslash that
-    //  gets removed from split line.c
-    strcat(absolute_path,nextDir);
-    printf("absDir: %s\n",absolute_path);
-  }
   if(chdir(nextDir) ==-1){
     perror("chdir error");
     success = -1;

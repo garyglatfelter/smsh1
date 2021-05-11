@@ -1,0 +1,47 @@
+Script started on 2021-05-10 23:09:56-04:00 [TERM="xterm" TTY="/dev/pts/2" COLUMNS="121" LINES="34"]
+gglatfelter@rubicon:~/csci296/projects/prj05/smsh1 $ ./smsh1 
+gglatfelter@myshell:~/home/gglatfelter/csci296/projects/prj05/smsh1 $ ls
+count100.bash  execute.c  execute.o  Makefile  smsh1  smsh1.c  smsh1.o	smsh.h	splitline.c  splitline.o  typescript
+gglatfelter@myshell:~/home/gglatfelter/csci296/projects/prj05/smsh1 $ date
+Mon 10 May 2021 11:10:09 PM EDT
+gglatfelter@myshell:~/home/gglatfelter/csci296/projects/prj05/smsh1 $ bogus
+cannot execute command: No such file or directory
+gglatfelter@myshell:~/home/gglatfelter/csci296/projects/prj05/smsh1 $ exit
+Goodbye..
+gglatfelter@rubicon:~/csci296/projects/prj05/smsh1 $ ./smsh1
+gglatfelter@myshell:~/home/gglatfelter/csci296/projects/prj05/smsh1 $ exit 7
+Goodbye..
+gglatfelter@rubicon:~/csci296/projects/prj05/smsh1 $ echo $?
+7
+gglatfelter@rubicon:~/csci296/projects/prj05/smsh1 $ ./smsh1
+gglatfelter@myshell:~/home/gglatfelter/csci296/projects/prj05/smsh1 $ pwd
+/home/gglatfelter/csci296/projects/prj05/smsh1
+gglatfelter@myshell:~/home/gglatfelter/csci296/projects/prj05/smsh1 $ cd ..
+gglatfelter@myshell:~/home/gglatfelter/csci296/projects/prj05 $ pwd
+/home/gglatfelter/csci296/projects/prj05
+gglatfelter@myshell:~/home/gglatfelter/csci296/projects/prj05 $ cd /usr/bin
+gglatfelter@myshell:~/usr/bin $ pwd
+/usr/bin
+gglatfelter@myshell:~/usr/bin $ cd
+gglatfelter@myshell:~/home/gglatfelter $ pwd
+/home/gglatfelter
+gglatfelter@myshell:~/home/gglatfelter $ sleep 10 &
+Started process 29322 in the background
+gglatfelter@myshell:~/home/gglatfelter $ ps -l
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1019 28455 28454  0  80   0 -  2129 do_wai pts/4    00:00:00 bash
+0 S  1019 29270 28455  0  80   0 -   497 do_wai pts/4    00:00:00 smsh1
+0 S  1019 29322 29270  0  80   0 -  1614 hrtime pts/4    00:00:00 sleep
+0 R  1019 29325 29270  0  80   0 -  2414 -      pts/4    00:00:00 ps
+gglatfelter@myshell:~/home/gglatfelter $ ps -l
+Child process 29322 completed with status: 0
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1019 28455 28454  0  80   0 -  2129 do_wai pts/4    00:00:00 bash
+0 S  1019 29270 28455  0  80   0 -   497 do_wai pts/4    00:00:00 smsh1
+0 R  1019 29339 29270  0  80   0 -  2414 -      pts/4    00:00:00 ps
+gglatfelter@myshell:~/home/gglatfelter $ exit
+Goodbye..
+gglatfelter@rubicon:~/csci296/projects/prj05/smsh1 $ exit
+exit
+
+Script done on 2021-05-10 23:47:13-04:00 [COMMAND_EXIT_CODE="0"]
