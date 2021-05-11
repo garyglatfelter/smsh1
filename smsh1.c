@@ -62,6 +62,9 @@ int main()
         freelist(arglist);
         free(cmdline);
         rick_grimes();
+        while( waitpid(-1,NULL, WNOHANG) >0 ) //loop until all children waited for
+          ;
+
         exit(val);
       }
 
@@ -80,6 +83,8 @@ int main()
     }
     free(cmdline);
   }
+
+  rick_grimes();
   return 0;
 }
 
@@ -147,5 +152,8 @@ char *updatePrompt(){
  * Leave no zombies behind
 */
 void rick_grimes(){
-  kill(0,SIGQUIT); //kill them all
+  kill(0,SIGINT); //kill them all
+
+  while( waitpid(-1,NULL, WNOHANG) >0 ) //loop until all children waited for
+    ;
 }
